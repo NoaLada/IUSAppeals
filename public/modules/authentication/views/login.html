@@ -3,7 +3,7 @@
     <h1><a href="http://www.ius.edu.ba"><img src="images/logo_full.png" height="150" width="190"/></a></h1>
     <div class="form-group ">
         <input type="text" class="form-control" placeholder="Username" id="UserName" ng-model="username" required>
-        <i class="fa fa-user"></i>
+        <i class="fa fa-user" style=""></i>
         <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
     </div>
     <div class="form-group log-status">
@@ -11,7 +11,7 @@
         <i class="fa fa-lock"></i>
         <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
     </div>
-        <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block" class="alert">Invalid Credentials</span>
+        <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block alert">Invalid Credentials</span>
         <a class="link" href="#">Forgot your password?</a>
-    <button type="submit" class="btn btn-primary btn-block btn-large" ng-disabled="form.$invalid">Sign in</button>
+    <button type="submit" class="btn btn-primary btn-block btn-large" >Sign in</button>
 </form>

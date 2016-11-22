@@ -13,10 +13,10 @@ $app->post('/api/authenticate', function ($request, $response, $args) {
 
     if (isset($json['username']) && isset($json['password'])) {
         $username = (string) $json['username'];
-        $typedpassword = (string) $json['password'];          
+        $typedpassword = (string) $json['password'];
 
         $db = connect_db();
-        
+
         if ($db != NULL) {
             $sql = 'SELECT salt FROM user WHERE id = "'.$username.'" OR email = "'.$username.'"';
             $result = $db->query($sql);
@@ -34,7 +34,7 @@ $app->post('/api/authenticate', function ($request, $response, $args) {
                     $password = generateHash($typedpassword, $salt);
 
                     $sql = 'SELECT * FROM user WHERE password = "'.$password.'" AND (id = "'.$username.'" OR email = "'.$username.'")';
-                
+
                     $result = $db->query($sql);
 
                     if ($result === false) {
@@ -52,7 +52,7 @@ $app->post('/api/authenticate', function ($request, $response, $args) {
     } else {
         $error = "Information missing.";
     }
-    
+
     return $response->withJson(array('success' => $success, 'message' => $error));
 });
 
@@ -121,7 +121,7 @@ function connect_db() {
     $server = 'localhost:3306';
     $user = 'root';
     $pass = '';
-    $database = 'testdb';
+    $database = 'testdb2';
     $connection = new mysqli($server, $user, $pass, $database);
 
     return $connection;

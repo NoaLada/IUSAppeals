@@ -9,7 +9,7 @@ function connect_db() {
 	$server = 'localhost';
 	$user = 'root';
 	$pass = '';
-	$database = 'iusappeals';
+	$database = 'testdb2';
 	$connection = new mysqli($server, $user, $pass, $database);
 
 	return $connection;

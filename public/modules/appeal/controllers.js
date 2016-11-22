@@ -1,19 +1,15 @@
 'use strict';
 
-angular.module('IUSAppeals', [
-    'Authentication',
-    'Home',
-    'ngRoute',
-    'ngCookies'
-])
+angular.module('Appeal')
 
 .controller('AppealController',
-    ['$scope',
-    function ($scope) {
+    ['$scope', '$rootScope', '$location', 'SendAppealService', 'AuthenticationService',
+    function ($scope, $rootScope, $location, SendAppealService, AuthenticationService) {
 
       $scope.sendappeal = function () {
+        console.log("Entered Controller!!");
           $scope.dataLoading = true;
-          SendAppealService.SendAppeal($scope.user, $scope.text, function(response) {
+          SendAppealService.SendAppeal(AuthenticationService.GetLoggedUser(), $scope.text, function(response) {
               if(response.success) {
                   $location.path('/');
                   console.log("response success");
@@ -27,3 +23,6 @@ angular.module('IUSAppeals', [
 
 
     }]);
+
+
+    //azrichak15M

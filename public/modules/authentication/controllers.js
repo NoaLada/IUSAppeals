@@ -14,7 +14,7 @@ angular.module('Authentication')
                 if(response.success) {
                     AuthenticationService.SetCredentials($scope.username, $scope.password);
                     $location.path('/appeal1');
-                    console.log("response success");
+                    console.log("response success!!!!");
                 } else {
                     console.log("Response not success");
                     $scope.error = response.message;

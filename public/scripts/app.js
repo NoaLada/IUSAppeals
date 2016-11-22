@@ -3,10 +3,12 @@
 // declare modules
 angular.module('Authentication', []);
 angular.module('Home', []);
+angular.module('Appeal', []);
 
 angular.module('IUSAppeals', [
     'Authentication',
     'Home',
+    'Appeal',
     'ngRoute',
     'ngCookies'
 ])
@@ -22,7 +24,7 @@ angular.module('IUSAppeals', [
 
         .when('/appeal1', {
             controller: 'AppealController',
-            templateUrl: 'modules/appeal/views/appeal.html',
+            templateUrl: 'modules/appeal/views/appeal.html'
         })
 
 
@@ -43,6 +45,7 @@ angular.module('IUSAppeals', [
         }
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
+          console.log("Ignore me");
             // redirect to login page if not logged in
             if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
                 $location.path('/login');

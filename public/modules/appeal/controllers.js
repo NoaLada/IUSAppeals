@@ -7,7 +7,7 @@ angular.module('Appeal')
     function ($scope, $rootScope, $location, SendAppealService, AuthenticationService) {
 
       $scope.sendappeal = function () {
-        console.log("Entered Controller!!");
+        console.log("Entered Controller!");
           $scope.dataLoading = true;
           SendAppealService.SendAppeal(AuthenticationService.GetLoggedUser(), $scope.text, function(response) {
               if(response.success) {

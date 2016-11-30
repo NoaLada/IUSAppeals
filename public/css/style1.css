@@ -33,8 +33,7 @@ h1 {
 
 .special-padding {
   margin: -21px;
-  margin-bottom: 25px;
-  border-bottom: 10px;
+  margin-bottom: 10px;
   border-color: red;
 }
 
@@ -92,7 +91,7 @@ h1 {
 .form-group .fa {
   position: absolute;
   right: 15px;
-  top: 17px;
+  /*top: 17px;*/
   color: #999;
 }
 

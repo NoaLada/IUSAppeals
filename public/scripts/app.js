@@ -4,11 +4,13 @@
 angular.module('Authentication', []);
 angular.module('Home', []);
 angular.module('Appeal', []);
+angular.module('Menu', []);
 
 angular.module('IUSAppeals', [
     'Authentication',
     'Home',
     'Appeal',
+    'Menu',
     'ngRoute',
     'ngCookies'
 ])
@@ -24,11 +26,41 @@ angular.module('IUSAppeals', [
 
         .when('/appeal1', {
             controller: 'AppealController',
-            templateUrl: 'modules/appeal/views/appeal.html'
+            templateUrl: 'modules/appeal/views/appeal1.html'
+        })
+
+        .when('/appeal2', {
+            controller: 'AppealController',
+            templateUrl: 'modules/appeal/views/appeal2.html'
+        })
+
+        .when('/appeal3', {
+            controller: 'AppealController',
+            templateUrl: 'modules/appeal/views/appeal3.html'
+        })
+
+        .when('/appeal4', {
+            controller: 'AppealController',
+            templateUrl: 'modules/appeal/views/appeal4.html'
+        })
+
+        .when('/appeal5', {
+            controller: 'AppealController',
+            templateUrl: 'modules/appeal/views/appeal5.html'
+        })
+
+        .when('/appeal6', {
+            controller: 'AppealController',
+            templateUrl: 'modules/appeal/views/appeal6.html'
+        })
+
+        .when('/menu', {
+            controller: 'MenuController',
+            templateUrl: 'modules/menu/views/menu.html'
         })
 
 
-        .when('/', {
+        .when('/home', {
             controller: 'HomeController',
             templateUrl: 'modules/home/views/home.html'
         })

@@ -11,7 +11,7 @@ angular.module('Appeal')
           $scope.dataLoading = true;
           SendAppealService.SendAppeal(AuthenticationService.GetLoggedUser(), $scope.text, function(response) {
               if(response.success) {
-                  $location.path('/');
+                  $location.path('/menu');
                   console.log("response success");
               } else {
                   console.log("Response not success");

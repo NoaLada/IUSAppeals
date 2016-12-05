@@ -32,19 +32,29 @@ h1 {
 }
 
 .special-padding {
-  margin: -21px;
-  margin-bottom: 10px;
-  border-color: red;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-top: -20px;
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+  border-radius: 3px;
+  /*margin-bottom: 10px;*/
+  border-bottom: 3px solid #87CFF9;
 }
 
 .appeal-form {
-  width: 600px;
+  width: 500px;
   padding: 20px 20px;
   background: #eee;
-  opacity: 0.8;
-  -moz-border-radius: 1px;
-  -webkit-border-radius: 1px;
-  border-radius: 1px;
+  opacity: 0.9;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  border: 0 solid #000;
+  border-left: 3px solid #000;
+  border-right: 3px solid #000;
+  border-top: 3px solid #000;
+  border-bottom: 3px solid #000;
   margin: auto;
   position: absolute;
   left: 0;

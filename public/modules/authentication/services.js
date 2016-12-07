@@ -19,6 +19,17 @@ angular.module('Authentication')
 
         };
 
+        service.GetUser = function(id, callback) {
+            $http.get('/api/user/' + id)
+                .success(function (response) {
+                    console.log("Server returned something");
+                    console.log(response);
+                    callback(response);
+                }).error(function (response) {
+                    console.log("Failed to communicate");
+                });
+        }
+
         service.SetCredentials = function (username, password) {
             var authdata = Base64.encode(username + ':' + password);
 

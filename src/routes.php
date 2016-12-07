@@ -2,14 +2,20 @@
 use src\Models\User;
 use src\Controllers\UserController;
 
+const ADMIN = 1;
+const STANDARD = 0;
+
 $app->get('/', function ($request, $response, $args) {
     return $this->renderer->render($response, 'index.phtml', $args);
 });
 
 $app->post('/api/authenticate', function ($request, $response, $args) {
     $json = json_decode($request->getBody(), true);
+
     $success = false;
     $error = "";
+    $user_type = -1;
+    $security_key = "";
 
     if (isset($json['username']) && isset($json['password'])) {
         $username = (string) $json['username'];
@@ -43,6 +49,13 @@ $app->post('/api/authenticate', function ($request, $response, $args) {
                         $error = "Wrong username/password combination.";
                     } else {
                         $success = true;
+
+                        $datasql = $result->fetch_assoc();
+                        $user_type = $datasql['isAdmin'];
+
+                        $security_key = "k".generateSalt();
+
+                        $_SESSION[$security_key] = $user_type;
                     }
                 }
             }
@@ -53,10 +66,41 @@ $app->post('/api/authenticate', function ($request, $response, $args) {
         $error = "Information missing.";
     }
 
-    return $response->withJson(array('success' => $success, 'message' => $error));
+    return $response->withJson(array('success' => $success, 'message' => $error, 'user_type' => $user_type, 
+        'security_key' => $_SESSION));
 });
 
+$app->get('/api/user/{id}', function ($request, $response, $args) {
+    if (!check_key($request, STANDARD)) {
+        return $response->withJson(array('success' => false, 'message' => "Access denied!", 'keys' => $_SESSION));
+    }
+
+    $sql = "SELECT * FROM user WHERE id = '".$args['id']."'";
+
+    $db = connect_db();
+    $result = $db->query($sql);
+
+    if ($result === false) {
+        $error = "Could not get user from database.";
+    } else if ($result->num_rows === 0) {
+        $error = "No users found.";
+    } else {
+        $data = array();
+        while($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        return $response->withJson(array('success' => true, 'data' => $data[0]));
+    }
+
+    return $response->withJson(array('success' => false, 'message' => $error));
+});
+
+
 $app->post('/api/appeals', function ($request, $response, $args) {
+    if (!check_key($request, STANDARD)) {
+        return $response->withJson(array('success' => false, 'message' => "Access denied!"));
+    }
+
     $json = json_decode($request->getBody(), true);
     $success = false;
     $error = "";
@@ -81,7 +125,37 @@ $app->post('/api/appeals', function ($request, $response, $args) {
     return $response->withJson(array('success' => $success, 'message' => $error));
 });
 
+$app->get('/api/appeals', function ($request, $response, $args) {
+    if (!check_key($request, ADMIN)) {
+        return $response->withJson(array('success' => false, 'message' => "Access denied!", 'keys' => $_SESSION));
+    }
+
+    $sql = "SELECT * FROM appeals";
+
+    $db = connect_db();
+    $result = $db->query($sql);
+
+    if ($result === false) {
+        $error = "Could not get appeals from database.";
+    } else if ($result->num_rows === 0) {
+        $error = "No appeals found.";
+    } else {
+        $data = array();
+        while($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+
+        return $response->withJson($data);
+    }
+
+    return $response->withJson(array('success' => false, 'message' => $error));
+});
+
 $app->delete('/api/appeals', function ($request, $response, $args) {
+    if (!check_key($request, ADMIN)) {
+        return $response->withJson(array('success' => false, 'message' => "Access denied!"));
+    }
+
     $json = json_decode($request->getBody(), true);
     $success = false;
     $error = "";
@@ -106,16 +180,52 @@ $app->delete('/api/appeals', function ($request, $response, $args) {
 });
 
 $app->get('/api/appeals/user/{id}', function ($request, $response, $args) {
+    if (!check_key($request, ADMIN)) {
+        return $response->withJson(array('success' => false, 'message' => "Access denied!"));
+    }
+
     return getAppealsInJSON($args['id'], 0, $response);
 });
 
 $app->get('/api/appeals/appeal/{id}', function ($request, $response, $args) {
+    if (!check_key($request, STANDARD)) {
+        return $response->withJson(array('success' => false, 'message' => "Access denied!"));
+    }
+
     return getAppealsInJSON(0, $args['id'], $response);
 });
 
 $app->get('/login', function ($request, $response, $args) {
     return $this->renderer->render($response, 'login.phtml', $args);
 });
+
+function check_key($request, $type) {
+    return true; // TODO TEMP
+
+    // Key not provided
+    if (!$request->hasHeader('key')) {
+        return false;
+    }
+
+    $key = $request->getHeader('key')[0];
+
+    // Key does not exist
+    if (!isset($_SESSION[$key])) {
+        return false;
+    }
+
+    // Admin has all privileges
+    if ($_SESSION[$key] == ADMIN) {
+        return true;
+    }
+
+    // If looking for standard route and the user is standard
+    if ($type == STANDARD && $_SESSION[$key] == STANDARD) {
+        return true;
+    }
+
+    return false;
+}
 
 function connect_db() {
     $server = 'localhost:3306';

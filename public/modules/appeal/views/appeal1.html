@@ -1,21 +1,21 @@
 
-<div ng-include src="'../modules/header.html'"></div>
+<div ng-include src="'../modules/header.html'" data-ng-init="get_data()"></div>
 
-<div class="appeal-form" name="form" ng-submit="sendappeal()" role="form" c>
+<form class="appeal-form" name="form" ng-submit="sendappeal()" role="form" c>
     <div class="special-padding">
     <img src="images/student_appeals1.jpg" style='height: 100%; width: 100%; object-fit: contain'/>
    </div>
      <div class="form-group">
        <br>
        <div class="row">
-         <div class="col-md-10"> <label for="">Name and Surname: </label></div>
+         <div class="col-md-10"> <label for="">Name and Surname: </label> {{data['firstname']}} {{data['lastname']}}</div>
        </div>
        <div class="row">
-         <div class="col-md-6"> <label for="">Student ID Number: </label></div>
-         <div class="col-md-4"> <label for="">CGPA: </label></div>
+         <div class="col-md-6"> <label for="">Student ID Number: </label> {{data['id']}}</div>
+         <div class="col-md-4"> <label for="">CGPA: </label> {{data['CGPA']}}</div>
        </div>
        <div class="row">
-         <div class="col-md-10"> <label for="">Faculty/Program: </label></div>
+         <div class="col-md-10"> <label for="">Faculty/Program: </label> {{data['faculty']}}/{{data['department']}}</div>
        </div>
        <br>
 
@@ -24,11 +24,11 @@
          <br>
 
        <div class="row">
-         <div class="col-md-6"> <label for="">Phone Number: </label></div>
-         <div class="col-md-4"> <label for="">Date: </label></div>
+         <div class="col-md-6"> <label for="">Phone Number: </label> {{data['telephone']}}</div>
+         <div class="col-md-4"> <label for="">Date: </label> {{date | date:'yyyy-MM-dd'}}</div>
        </div>
      </div>
 
      <button type="submit" class="btn btn-primary btn-block btn-large" >Submit</button>
 
-</div>
+</form>

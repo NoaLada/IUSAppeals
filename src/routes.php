@@ -56,6 +56,7 @@ $app->post('/api/authenticate', function ($request, $response, $args) {
                         $security_key = "k".generateSalt();
 
                         $_SESSION[$security_key] = $user_type;
+                        $_SESSION[$security_key."u"] = $username;
                     }
                 }
             }
@@ -72,7 +73,7 @@ $app->post('/api/authenticate', function ($request, $response, $args) {
 
 $app->get('/api/user/{id}', function ($request, $response, $args) {
     if (!check_key($request, STANDARD)) {
-        return $response->withJson(array('success' => false, 'message' => "Access denied!", 'keys' => $_SESSION));
+        return $response->withJson(array('success' => false, 'message' => "Access denied!"));
     }
 
     $sql = "SELECT * FROM user WHERE id = '".$args['id']."'";
@@ -127,7 +128,7 @@ $app->post('/api/appeals', function ($request, $response, $args) {
 
 $app->get('/api/appeals', function ($request, $response, $args) {
     if (!check_key($request, ADMIN)) {
-        return $response->withJson(array('success' => false, 'message' => "Access denied!", 'keys' => $_SESSION));
+        return $response->withJson(array('success' => false, 'message' => "Access denied!"));
     }
 
     $sql = "SELECT * FROM appeals";
@@ -180,11 +181,16 @@ $app->delete('/api/appeals', function ($request, $response, $args) {
 });
 
 $app->get('/api/appeals/user/{id}', function ($request, $response, $args) {
-    if (!check_key($request, ADMIN)) {
-        return $response->withJson(array('success' => false, 'message' => "Access denied!"));
+    if ($request->hasHeader('key') && 
+        $_SESSION[$request->getHeader('key')[0]."u"] == $args['id']) {
+        return getAppealsInJSON($args['id'], 0, $response);
+    }
+    
+    if (check_key($request, ADMIN)) {    
+        return getAppealsInJSON($args['id'], 0, $response);
     }
 
-    return getAppealsInJSON($args['id'], 0, $response);
+    return $response->withJson(array('success' => false, 'message' => "Access denied!"));
 });
 
 $app->get('/api/appeals/appeal/{id}', function ($request, $response, $args) {
@@ -199,9 +205,55 @@ $app->get('/login', function ($request, $response, $args) {
     return $this->renderer->render($response, 'login.phtml', $args);
 });
 
-function check_key($request, $type) {
-    return true; // TODO TEMP
+$app->get('/api/conf', function ($request, $response, $args) {
+    if ($request->hasHeader('key') && $request->hasHeader('id')) {
+        $success = false;
+        $id = $request->hasHeader('id')[0];
+        $key = $request->hasHeader('key')[0];
+        
+        $sql = "SELECT user_id, appeal_id, sign_person_id, salt FROM signatures,user WHERE signature_id=".$id." AND user.id = signatures.user_id";
+        $db = connect_db();
+        $result = $db->query($sql);
+        
+        if ($result->num_rows === 0) {
+            $error = "No such appeal.";
+        } else {
+            $data = array();
+            while($row = mysqli_fetch_assoc($result)) {
+                $data[] = $row;
+            }
+            
+            $user_id = $data['user_id'];
+            $appeal_id = $data['appeal_id'];
+            $sperson_id = $data['sign_person_id'];
+            $user_salt = $data['salt'];
+            
+            $hash = generate_confirmation_hash($id, $user_id, $appeal_id, $sperson_id, $user_salt);
+            
+            if ($hash == $key) {
+                $sql = "UPDATE signatures SET has_signed=1 WHERE signature_id=".$id.";";
+                $db = connect_db();
+                $result = $db->query($sql);
 
+                if ($result === false) {
+                    $error = "Could not confirm the link.";
+                } else {
+                    $success = true;
+                }
+            } else {
+                $error = "Wrong confirmation link.";
+            }
+        }    
+        
+        return $response->withJson(array('success' => $success, 'message' => $error));  
+    }
+    
+    return $response->withJson(array('success' => false, 'message' => "Missing information!"));    
+});
+
+
+
+function check_key($request, $type) {
     // Key not provided
     if (!$request->hasHeader('key')) {
         return false;
@@ -235,6 +287,15 @@ function connect_db() {
     $connection = new mysqli($server, $user, $pass, $database);
 
     return $connection;
+}
+
+function generate_confirmation_link($signature_id, $user_id, $appeal_id, $sperson_id, $user_salt) {
+    $hash = generate_confirmation_hash($signature_id, $user_id, $appeal_id, $sperson_id, $user_salt);
+    return "http://localhost/api/conf/?id=".$signature_id."&key=".$hash;
+}
+
+function generate_confirmation_hash($signature_id, $user_id, $appeal_id, $sperson_id, $user_salt) {
+    return hash("sha256", $signature_id.":P".$user_id.":D".$appeal_id.":)".$sperson_id."xD".$user_salt);
 }
 
 function generateSalt() {

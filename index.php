@@ -2,7 +2,7 @@
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \app\models\User.php as User;
+use \Slim\App;
 
 require '../vendor/autoload.php';
 
@@ -16,15 +16,15 @@ function connect_db() {
 	return $connection;
 }
 
-$app = new \Slim\App;
+$app = new App();
 
 $app->add(new \Slim\Middleware\SessionCookie(array(
-    'expires' => '20 minutes',
+    'expires' => '10 minutes',
     'path' => '/',
     'domain' => null,
     'secure' => false,
     'httponly' => false,
-    'name' => 'slim_session',
+    'name' => 'session_storage',
     'secret' => 'azreczaidec',
     'cipher' => MCRYPT_RIJNDAEL_256,
     'cipher_mode' => MCRYPT_MODE_CBC

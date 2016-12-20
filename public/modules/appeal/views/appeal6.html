@@ -1,1 +1,63 @@
-<h1> Under construction </h1>
+
+<div ng-include src="'../modules/header.html'" data-ng-init="get_data()"></div>
+
+
+<form class="appeal-form" name="form" ng-submit="sendappeal()" role="form" c>
+  <div class="special-padding">
+    <img src="images/student_appeals6.jpg" style='height: 100%; width: 100%; object-fit: contain'/>
+  </div>
+  <div class="form-group">
+    <br>
+    <div class="row">
+      <div class="col-md-7"> <label for="">Name and Surname: </label> {{data['firstname']}} {{data['lastname']}}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7"> <label for="">Student ID Number: </label> {{data['id']}}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7"> <label for="">Faculty/Program: </label> {{data['faculty']}}/{{data['department']}}</div>
+      <div class="col-md-5"> <label for="">Currently at ELS: </label> </div>
+    </div>
+
+    <div class="row">
+      <div class="form-inline">
+        <div class="col-md-12">
+          <label for="">Hereby I am kindly asking you to grant me dormant student status for
+            <div class="form-group">
+              <select class="form-control" id="sel1">
+                <option>Fall</option>
+                <option>Spring</option>
+              </select>
+            </div>
+
+            semester of 2016-2017 Academic Year. </label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-12">
+          <label for=" "> The reason is: <br>
+            <label class="radio"><input type="radio" name="optradio">Maternity leave</label>
+            <label class="radio"><input type="radio" name="optradio">An illness due to which I cannot attend the classes or sit for the examinations</label>
+            <label class="radio"><input type="radio" name="optradio">Carrying out an approved professional work experience in the country or abroad</label>
+            <label class="radio"><input type="radio" name="optradio">Other justifiable reason (extreme family problems, death cases of nearer family memebrs, serious financial problems that question my existence and residence in B&H</label>
+            <label class="radio"><input type="radio" name="optradio">Please state what exactly, in details: <input type="text" class="form-control" id="reason"></label>
+
+        </div>
+      </div>
+
+      <a href="http://google.com" class="btn-xs btn-danger pull-right">NOTE</a>
+
+      <div class="row">
+        <div class="col-md-6"> <label for="">Phone Number: </label> {{data['telephone']}}</div>
+        <div class="col-md-4"> <label for="">Date: </label> {{date | date:'yyyy-MM-dd'}}</div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block btn-large" >Submit</button>
+
+  </form>

@@ -1,1 +1,117 @@
-<h1> Under construction </h1>
+
+<div ng-include src="'../modules/header.html'" data-ng-init="get_data()"></div>
+
+
+<form class="appeal-form" name="form" ng-submit="sendappeal()" role="form" c>
+  <div class="special-padding">
+    <img src="images/student_appeals5.jpg" style='height: 100%; width: 100%; object-fit: contain'/>
+  </div>
+  <div class="form-group">
+    <br>
+    <div class="row">
+      <div class="col-md-10"> <label for="">Name and Surname: </label> {{data['firstname']}} {{data['lastname']}}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-10"> <label for="">Student ID Number: </label> {{data['id']}}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5"> <label for="">CGPA: </label> </div>
+      <div class="col-md-5"> <label for="">Scholarship (%): </label> </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="form-inline">
+        <div class="col-md-8">
+          <label for=""> TRANSFER FROM: </label>
+            <div class="form-group">
+              <select class="form-control" id="fac1">
+                <option></option>
+                <option value="fens">FENS</option>
+                <option value="fba">FBA</option>
+                <option value="fass">FASS</option>
+                <option value="flw">FLW</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <select class="form-control" id="pro1">
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="row">
+        <div class="form-inline">
+          <div class="col-md-8">
+            <label for=""> TRANSFER TO: </label>
+              <div class="form-group">
+                <select class="form-control" id="fac2">
+                  <option></option>
+                  <option value="fens">FENS</option>
+                  <option value="fba">FBA</option>
+                  <option value="fass">FASS</option>
+                  <option value="flw">FLW</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <select class="form-control" id="pro2">
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <a href="http://google.com" class="btn-xs btn-danger pull-right">CRITERIA</a>
+
+      <div class="row">
+        <div class="col-md-6"> <label for="">Phone Number: </label> {{data['telephone']}}</div>
+        <div class="col-md-4"> <label for="">Date: </label> {{date | date:'yyyy-MM-dd'}}</div>
+      </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block btn-large" >Submit</button>
+
+  </form>
+
+  <script>
+
+  $(document).ready(function () {
+      $("#fac1").change(function () {
+          var val = $(this).val();
+          if (val == "fens") {
+              $("#pro1").html("<option value=''>CS</option><option value=''>SE</option><option value=''>EE</option><option value=''>IE</option><option value=''>ME</option><option value=''>ARCH</option>");
+          } else if (val == "fba") {
+              $("#pro1").html("<option value=''>ECO</option><option value=''>IBF</option><option value=''>MAN</option><option value=''>IR</option>");
+          } else if (val == "fass") {
+              $("#pro1").html("<option value=''>VACD</option><option value=''>SPS</option><option value=''>PSY</option><option value=''>ENG</option>");
+          } else if (val == "flw") {
+              $("#pro1").html("");
+          }
+      });
+  });
+
+  $(document).ready(function () {
+      $("#fac2").change(function () {
+          var val = $(this).val();
+          if (val == "fens") {
+              $("#pro2").html("<option value=''>CS</option><option value=''>SE</option><option value=''>EE</option><option value=''>IE</option><option value=''>ME</option><option value=''>ARCH</option>");
+          } else if (val == "fba") {
+              $("#pro2").html("<option value=''>ECO</option><option value=''>IBF</option><option value=''>MAN</option><option value=''>IR</option>");
+          } else if (val == "fass") {
+              $("#pro2").html("<option value=''>VACD</option><option value=''>SPS</option><option value=''>PSY</option><option value=''>ENG</option>");
+          } else if (val == "flw") {
+              $("#pro2").html("");
+          }
+      });
+  });
+
+  </script>

@@ -21,7 +21,7 @@ h1.page-header {
 }
 
 .side-menu {
-	position: relative;
+	position: fixed;
 	width: 100%;
 	height: 100%;
 	background-color: #f8f8f8;
@@ -36,16 +36,16 @@ h1.page-header {
 }
 .side-menu .navbar-nav .active a {
 	background-color: transparent;
-	margin-right: -1px;
+	margin-right: 0px;
 	border-right: 5px solid #e7e7e7;
 }
 .side-menu .navbar-nav li {
 	display: block;
-	width: 100%;
+	width: 120%;
 	border-bottom: 1px solid #e7e7e7;
 }
 .side-menu .navbar-nav li a {
-	padding: 15px;
+	padding: 10px;
 }
 .side-menu .navbar-nav li a .glyphicon {
 	padding-right: 10px;
@@ -231,7 +231,7 @@ h1.page-header {
 		/* Add position:absolute for scrollable menu -> see top comment */
 		position: fixed;
 		left: -300px;
-		width: 300px;
+		width: 1000px;
 		top: 43px;
 		height: 100%;
 		border-right: 1px solid #e7e7e7;
@@ -347,6 +347,6 @@ h1.page-header {
 .panel-footer .pagination { margin: 0; }
 .panel .glyphicon,.list-group-item .glyphicon { margin-right:5px; }
 .panel-body .radio, .checkbox { display:inline-block;margin:15px; }
-.panel-body input[type=checkbox]:checked + label { text-decoration: line-through;color: rgb(128, 144, 160); }
+.panel-body input[type=checkbox]:checked + label { color: rgb(128, 144, 160); }
 .list-group-item:hover, a.list-group-item:focus {text-decoration: none;background-color: rgb(245, 245, 245);}
 .list-group { margin-bottom:0px; }

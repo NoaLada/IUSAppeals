@@ -10,7 +10,7 @@ angular.module('Authentication')
         service.Login = function (username, password, callback) {
             $http.post('/api/authenticate', { username: username, password: password })
                 .success(function (response) {
-                    console.log("Server returned something");
+                    console.log("Server returned something!");
                     console.log(response);
                     callback(response);
                 }).error(function (response) {
@@ -20,7 +20,9 @@ angular.module('Authentication')
         };
 
         service.GetUser = function(id, callback) {
-            $http.get('/api/user/' + id)
+            var key = $rootScope.globals.currentUser.key;
+            console.log("Going to api/user/" + id + " with key " + key);
+            $http.get('/api/user/' + id + '/' + key)
                 .success(function (response) {
                     console.log("Server returned something");
                     console.log(response);
@@ -30,13 +32,14 @@ angular.module('Authentication')
                 });
         }
 
-        service.SetCredentials = function (username, password) {
+        service.SetCredentials = function (username, password, key) {
             var authdata = Base64.encode(username + ':' + password);
 
             $rootScope.globals = {
                 currentUser: {
                     username: username,
-                    authdata: authdata
+                    authdata: authdata,
+                    key: key
                 }
             };
 
@@ -46,6 +49,10 @@ angular.module('Authentication')
 
         service.GetLoggedUser = function() {
           return $rootScope.globals.currentUser.username;
+        }
+
+        service.GetLoggedKey = function() {
+            return $rootScope.globals.currentUser.key;
         }
 
         service.ClearCredentials = function () {

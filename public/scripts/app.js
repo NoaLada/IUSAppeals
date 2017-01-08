@@ -65,6 +65,11 @@ angular.module('IUSAppeals', [
             templateUrl: 'modules/home/views/home.html'
         })
 
+        .when('/admin', {
+            controller: 'AdminController',
+            templateUrl: 'modules/admin/views/admin.html'
+        })
+
         .otherwise({ redirectTo: '/login' });
 }])
 

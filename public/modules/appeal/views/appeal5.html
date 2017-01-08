@@ -26,14 +26,14 @@
     <div class="row">
       <div class="form-inline">
         <div class="col-md-8">
-          <label for=""> TRANSFER FROM: </label>
+          <label for=""> Transfer from: </label> 
             <div class="form-group">
               <select class="form-control" id="fac1">
                 <option></option>
-                <option value="fens">FENS</option>
-                <option value="fba">FBA</option>
-                <option value="fass">FASS</option>
-                <option value="flw">FLW</option>
+                <option value="fens">Faculty of Engineering and Natural Sciences</option>
+                <option value="fba">Faculty of Business Administration</option>
+                <option value="fass">Faculty of Arts and Social Sciences</option>
+                <option value="flw">Faculty of Law</option>
               </select>
             </div>
             <div class="form-group">
@@ -49,14 +49,14 @@
       <div class="row">
         <div class="form-inline">
           <div class="col-md-8">
-            <label for=""> TRANSFER TO: </label>
+            <label for=""> Transfer to: </label>
               <div class="form-group">
                 <select class="form-control" id="fac2">
                   <option></option>
-                  <option value="fens">FENS</option>
-                  <option value="fba">FBA</option>
-                  <option value="fass">FASS</option>
-                  <option value="flw">FLW</option>
+                  <option value="fens">Faculty of Engineering and Natural Sciences</option>
+                  <option value="fba">Faculty of Business Administration</option>
+                  <option value="fass">Faculty of Arts and Social Sciences</option>
+                  <option value="flw">Faculty of Law</option>
                 </select>
               </div>
               <div class="form-group">
@@ -69,10 +69,10 @@
 
         <br>
 
-        <a href="http://google.com" class="btn-xs btn-danger pull-right">CRITERIA</a>
+        <a href="http://google.com" class="btn-xs btn-info pull-right">CRITERIA</a>
 
       <div class="row">
-        <div class="col-md-6"> <label for="">Phone Number: </label> {{data['telephone']}}</div>
+        <div class="col-md-5"> <label for="">Phone Number: </label> {{data['telephone']}}</div>
         <div class="col-md-4"> <label for="">Date: </label> {{date | date:'yyyy-MM-dd'}}</div>
       </div>
 
@@ -88,13 +88,16 @@
       $("#fac1").change(function () {
           var val = $(this).val();
           if (val == "fens") {
-              $("#pro1").html("<option value=''>CS</option><option value=''>SE</option><option value=''>EE</option><option value=''>IE</option><option value=''>ME</option><option value=''>ARCH</option>");
+            $("#pro1").show();
+              $("#pro1").html("<option value=''>Computer Science and Engineering</option><option value=''>Software Engineering</option><option value=''>Electrical Engineering</option><option value=''>Industrial Engineering</option><option value=''>Mechanical Engineering</option><option value=''>Architecture</option>");
           } else if (val == "fba") {
-              $("#pro1").html("<option value=''>ECO</option><option value=''>IBF</option><option value=''>MAN</option><option value=''>IR</option>");
+            $("#pro1").show();
+              $("#pro1").html("<option value=''>Economy</option><option value=''>International Business and Finance</option><option value=''>Management</option><option value=''>International Relations</option>");
           } else if (val == "fass") {
-              $("#pro1").html("<option value=''>VACD</option><option value=''>SPS</option><option value=''>PSY</option><option value=''>ENG</option>");
+            $("#pro1").show();
+              $("#pro1").html("<option value=''>Visual Arts and Communication Design</option><option value=''>Social and Political Sciences</option><option value=''>Psychology</option><option value=''>English Language and Literature</option>");
           } else if (val == "flw") {
-              $("#pro1").html("");
+              $("#pro1").hide();
           }
       });
   });
@@ -103,13 +106,16 @@
       $("#fac2").change(function () {
           var val = $(this).val();
           if (val == "fens") {
-              $("#pro2").html("<option value=''>CS</option><option value=''>SE</option><option value=''>EE</option><option value=''>IE</option><option value=''>ME</option><option value=''>ARCH</option>");
+            $("#pro2").show();
+              $("#pro2").html("<option value=''>Computer Science and Engineering</option><option value=''>Software Engineering</option><option value=''>Electrical Engineering</option><option value=''>Industrial Engineering</option><option value=''>Mechanical Engineering</option><option value=''>Architecture</option>");
           } else if (val == "fba") {
-              $("#pro2").html("<option value=''>ECO</option><option value=''>IBF</option><option value=''>MAN</option><option value=''>IR</option>");
+            $("#pro2").show();
+              $("#pro2").html("<option value=''>Economy</option><option value=''>International Business and Finance</option><option value=''>Management</option><option value=''>International Relations</option>");
           } else if (val == "fass") {
-              $("#pro2").html("<option value=''>VACD</option><option value=''>SPS</option><option value=''>PSY</option><option value=''>ENG</option>");
+            $("#pro2").show();
+              $("#pro2").html("<option value=''>Visual Arts and Communication Design</option><option value=''>Social and Political Sciences</option><option value=''>Psychology</option><option value=''>English Language and Literature</option>");
           } else if (val == "flw") {
-              $("#pro2").html("");
+              $("#pro2").hide();
           }
       });
   });

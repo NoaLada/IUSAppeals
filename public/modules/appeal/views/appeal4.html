@@ -1,1 +1,92 @@
-<h1> Underhh construction </h1>
+
+<div ng-include src="'../modules/header.html'" data-ng-init="get_data()"></div>
+
+<form class="appeal-form" name="form" ng-submit="sendappeal()" role="form" c>
+  <div class="special-padding">
+    <img src="images/student_appeals4.jpg" style='height: 100%; width: 100%; object-fit: contain'/>
+  </div>
+  <div class="form-group">
+    <br>
+    <div class="row">
+      <div class="col-md-6"> <label for="">Name and Surname: </label> {{data['firstname']}} {{data['lastname']}}</div>
+      <div class="col-md-6"> <label for="">Student ID Number: </label> {{data['id']}}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6"> <label for="">Faculty/Program: </label> {{data['faculty']}}/{{data['department']}}</div>
+      <div class="col-md-6"> <label for="">CGPA: </label> {{data['CGPA']}}</div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="col-md-12"><label for="">I kindly ask you to approve additional/late registration of course(s) for fall/spring semester in the 2016-17 Academic year. </label></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2"><input type="text" id="coursecode1" placeholder="Code" maxlength="7" size="7"></div>
+      <div class="col-md-8"><input type="text" id="coursename1" placeholder="Course name" size="45"></div>
+      <div class="col-md-2"><input type="text" id="coursensection1" placeholder="Section" maxlength="1" size="3"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2"><input type="text" id="coursecode2" placeholder="Code" maxlength="7" size="7"></div>
+      <div class="col-md-8"><input type="text" id="coursename2" placeholder="Course name" size="45"></div>
+      <div class="col-md-2"><input type="text" id="coursensection2" placeholder="Section" maxlength="1" size="3"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2"><input type="text" id="coursecode3" placeholder="Code" maxlength="7" size="7"></div>
+      <div class="col-md-8"><input type="text" id="coursename3" placeholder="Course name" size="45"></div>
+      <div class="col-md-2"><input type="text" id="coursensection3" placeholder="Section" maxlength="1" size="3"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2"><input type="text" id="coursecode4" placeholder="Code" maxlength="7" size="7"></div>
+      <div class="col-md-8"><input type="text" id="coursename4" placeholder="Course name" size="45"></div>
+      <div class="col-md-2"><input type="text" id="coursensection4" placeholder="Section" maxlength="1" size="3"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2"><input type="text" id="coursecode5" placeholder="Code" maxlength="7" size="7"></div>
+      <div class="col-md-8"><input type="text" id="coursename5" placeholder="Course name" size="45"></div>
+      <div class="col-md-2"><input type="text" id="coursensection5" placeholder="Section" maxlength="1" size="3"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2"><input type="text" id="coursecode6" placeholder="Code" maxlength="7" size="7"></div>
+      <div class="col-md-8"><input type="text" id="coursename6" placeholder="Course name" size="45"></div>
+      <div class="col-md-2"><input type="text" id="coursensection6" placeholder="Section" maxlength="1" size="3"></div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="col-md-10"><label>Reason for registration of additional course(s): </label> </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <label class="radio-inline"><input type="radio" name="improvegrade">Improving the grade</label>
+        <label class="radio-inline"><input type="radio" name="missingcredit">Missing credits</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2">
+        <label class="radio-inline"><input type="radio" name="other">Other:</label>
+      </div>
+      <div class="col-md-10">
+        <input type="text" id="reason" placeholder="please specify" size="45">
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="col-md-6"> <label for="">Phone Number: </label> {{data['telephone']}}</div>
+      <div class="col-md-4"> <label for="">Date: </label> {{date | date:'yyyy-MM-dd'}}</div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block btn-large" >Submit</button>
+
+</form>

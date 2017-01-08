@@ -68,12 +68,12 @@ $app->post('/api/authenticate', function ($request, $response, $args) {
     }
 
     return $response->withJson(array('success' => $success, 'message' => $error, 'user_type' => $user_type, 
-        'security_key' => $_SESSION));
+        'security_key' => $security_key, 'test' => $_SESSION));
 });
 
-$app->get('/api/user/{id}', function ($request, $response, $args) {
-    if (!check_key($request, STANDARD)) {
-        return $response->withJson(array('success' => false, 'message' => "Access denied!"));
+$app->get('/api/user/{id}/{key}', function ($request, $response, $args) {
+    if (!isset($args['key']) || $_SESSION[$args['key']."u"] != $args['id']) {
+        return $response->withJson(array('success' => false, 'message' => "Access denied!", 'test' => $args['key']));
     }
 
     $sql = "SELECT * FROM user WHERE id = '".$args['id']."'";
@@ -194,11 +194,16 @@ $app->get('/api/appeals/user/{id}', function ($request, $response, $args) {
 });
 
 $app->get('/api/appeals/appeal/{id}', function ($request, $response, $args) {
-    if (!check_key($request, STANDARD)) {
-        return $response->withJson(array('success' => false, 'message' => "Access denied!"));
+    if ($request->hasHeader('key') && 
+        $_SESSION[$request->getHeader('key')[0]."u"] == $args['id']) {
+        return getAppealsInJSON($args['id'], 0, $response);
+    } 
+
+    if (check_key($request, ADMIN)) {    
+        return getAppealsInJSON($args['id'], 0, $response);
     }
 
-    return getAppealsInJSON(0, $args['id'], $response);
+    return $response->withJson(array('success' => false, 'message' => "Access denied!"));
 });
 
 $app->get('/login', function ($request, $response, $args) {
@@ -254,7 +259,6 @@ $app->get('/api/conf', function ($request, $response, $args) {
 
 
 function check_key($request, $type) {
-    return true;
     // Key not provided
     if (!$request->hasHeader('key')) {
         return false;

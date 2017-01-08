@@ -12,9 +12,12 @@ angular.module('Authentication')
             $scope.dataLoading = true;
             AuthenticationService.Login($scope.username, $scope.password, function(response) {
                 if(response.success) {
-                    AuthenticationService.SetCredentials($scope.username, $scope.password);
+                    var key = response['security_key'];
+                    console.log("Key: " + key);
+                    console.log(response);
+                    AuthenticationService.SetCredentials($scope.username, $scope.password, key);
                     $location.path('/menu');
-                    console.log("response success!!!!");
+                    console.log("response success!");
                 } else {
                     console.log("Response not success");
                     $scope.error = response.message;

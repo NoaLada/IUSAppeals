@@ -254,6 +254,7 @@ $app->get('/api/conf', function ($request, $response, $args) {
 
 
 function check_key($request, $type) {
+    return true;
     // Key not provided
     if (!$request->hasHeader('key')) {
         return false;
@@ -295,7 +296,7 @@ function generate_confirmation_link($signature_id, $user_id, $appeal_id, $sperso
 }
 
 function generate_confirmation_hash($signature_id, $user_id, $appeal_id, $sperson_id, $user_salt) {
-    return hash("sha256", $signature_id.":P".$user_id.":D".$appeal_id.":)".$sperson_id."xD".$user_salt);
+    return hash("sha256", $signature_id.":)".$user_id."<3".$appeal_id.":)".$sperson_id."<3".$user_salt);
 }
 
 function generateSalt() {

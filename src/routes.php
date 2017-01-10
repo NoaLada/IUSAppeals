@@ -75,15 +75,16 @@ $app->get('/api/user/{id}/{key}', function ($request, $response, $args) {
     return $response->withJson(array('success' => false, 'message' => $error));
 });
 $app->post('/api/appeals', function ($request, $response, $args) {
-    if (!check_key($request, STANDARD)) {
-        return $response->withJson(array('success' => false, 'message' => "Access denied!"));
-    }
     $json = json_decode($request->getBody(), true);
+    if (!check_key($request, STANDARD)) {
+        return $response->withJson(array('success' => false, 'message' => "Access denied!", 'test' => $json['key']));
+    }
+
     $success = false;
     $error = "";
     if (isset($json['text']) && isset($json['user'])) {
         $id = $json['user'];
-        $text = $json['text'];
+        $text = json_encode($json['text']); // $text is JSON, but I have to convert it to String
         $sql = "INSERT INTO appeals (user_id, appeal_id, time, text) VALUES ('.$id.', NULL, CURRENT_TIMESTAMP, '".$text."');";
         $db = connect_db();
         $result = $db->query($sql);
@@ -208,11 +209,13 @@ $app->get('/api/conf', function ($request, $response, $args) {
     return $response->withJson(array('success' => false, 'message' => "Missing information!"));
 });
 function check_key($request, $type) {
+    $json = json_decode($request->getBody(), true);
+
     // Key not provided
-    if (!$request->hasHeader('key')) {
+    if (!isset($json['key'])) {
         return false;
     }
-    $key = $request->getHeader('key')[0];
+    $key = $json['key'];
     // Key does not exist
     if (!isset($_SESSION[$key])) {
         return false;

@@ -17,7 +17,7 @@
          <div class="col-md-10"> <label for="">Faculty/Program: </label> {{data['faculty']}}/{{data['department']}}</div>
        </div>
        <div class="row">
-         <div class="col-md-12"> <label for="uni">Name of the university with courses offered / Name of the country: </label> <input type="text" class="form-control" id="uni"></div>
+         <div class="col-md-12"> <label for="uni">Name of the university with courses offered / Name of the country: </label> <input type="text" class="form-control" id="uni" ng-model="data.university"></div>
        </div>
 
        <br>
@@ -31,18 +31,18 @@
        </div>
 
        <div class="row">
-         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursecode1" placeholder="Course code"></label> </div>
-         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursecodeius1" placeholder="IUS Course code"></label> </div>
+         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursecode1" ng-model="data.code" placeholder="Course code"></label> </div>
+         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursecodeius1" ng-model="data.ius_code"placeholder="IUS Course code"></label> </div>
        </div>
 
        <div class="row">
-         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursename1" placeholder="Course name"></label> </div>
-         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursenameius1" placeholder="IUS Course name"></label> </div>
+         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursename1" ng-model="data.coursename"placeholder="Course name"></label> </div>
+         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursenameius1" ng-model="data.ius_coursename"placeholder="IUS Course name"></label> </div>
        </div>
 
        <div class="row">
-         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="ects1" placeholder="ECTS"></label> </div>
-         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="ectsius1" placeholder="IUS ECTS"></label> </div>
+         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="ects1" ng-model="data.ects" placeholder="ECTS"></label> </div>
+         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="ectsius1" ng-model="data.ius_ects" placeholder="IUS ECTS"></label> </div>
        </div>
 
        <div class="row">
@@ -51,18 +51,18 @@
 
 
        <div class="row">
-         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursecode2" placeholder="Course code"></label> </div>
-         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursecodeius2" placeholder="IUS Course code"></label> </div>
+         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursecode2" ng-model="data.code2"  placeholder="Course code"></label> </div>
+         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursecodeius2" ng-model="data.ius_code2" placeholder="IUS Course code"></label> </div>
        </div>
 
        <div class="row">
-         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursename2" placeholder="Course name"></label> </div>
-         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursenameius2" placeholder="IUS Course name"></label> </div>
+         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursename2" ng-model="data.coursename2" placeholder="Course name"></label> </div>
+         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="coursenameius2" ng-model="data.ius_coursename2" placeholder="IUS Course name"></label> </div>
        </div>
 
        <div class="row">
-         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="ects2" placeholder="ECTS"></label> </div>
-         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="ectsius2" placeholder="IUS ECTS"></label> </div>
+         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="ects2" ng-model="data.ects2" placeholder="ECTS"></label> </div>
+         <div class="col-md-6"> <label for=""><input type="text" class="form-control" id="ectsius2" ng-model="data.ius_ects2" placeholder="IUS ECTS"></label> </div>
        </div>
 
        <br>

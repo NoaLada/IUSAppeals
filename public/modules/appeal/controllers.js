@@ -7,9 +7,19 @@ angular.module('Appeal')
     function ($scope, $rootScope, $location, SendAppealService, AuthenticationService) {
 
       $scope.sendappeal = function () {
-        console.log("Entered Controller!");
+        console.log("Entered Controller!!");
           $scope.dataLoading = true;
-          SendAppealService.SendAppeal(AuthenticationService.GetLoggedUser(), $scope.text, function(response) {
+
+          // TODO - Radio buttons do not work, i.e. are not stored into json
+
+          var json = $scope.data;
+          delete json.id;
+          delete json.password;
+          delete json.salt;
+          delete json.isAdmin;
+
+          console.log(json);
+          SendAppealService.SendAppeal(AuthenticationService.GetLoggedUser(), json, function(response) {
               if(response.success) {
                   $location.path('/menu');
                   console.log("response success");

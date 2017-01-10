@@ -23,39 +23,39 @@
     </div>
 
     <div class="row">
-      <div class="col-md-2"><input type="text" id="coursecode1" placeholder="Code" maxlength="7" size="7"></div>
-      <div class="col-md-8"><input type="text" id="coursename1" placeholder="Course name" size="45"></div>
-      <div class="col-md-2"><input type="text" id="coursensection1" placeholder="Section" maxlength="1" size="3"></div>
+      <div class="col-md-2"><input type="text" id="coursecode1" placeholder="Code" ng-model="appealdata.code" maxlength="7" size="7"></div>
+      <div class="col-md-8"><input type="text" id="coursename1" placeholder="Course name" ng-model="appealdata.coursename" size="45"></div>
+      <div class="col-md-2"><input type="text" id="coursensection1" placeholder="Section" ng-model="appealdata.coursesection1" maxlength="1" size="3"></div>
     </div>
 
     <div class="row">
-      <div class="col-md-2"><input type="text" id="coursecode2" placeholder="Code" maxlength="7" size="7"></div>
-      <div class="col-md-8"><input type="text" id="coursename2" placeholder="Course name" size="45"></div>
-      <div class="col-md-2"><input type="text" id="coursensection2" placeholder="Section" maxlength="1" size="3"></div>
+      <div class="col-md-2"><input type="text" id="coursecode2" placeholder="Code" ng-model="appealdata.coursecode2" maxlength="7" size="7"></div>
+      <div class="col-md-8"><input type="text" id="coursename2" placeholder="Course name" ng-model="appealdata.coursename2" size="45"></div>
+      <div class="col-md-2"><input type="text" id="coursensection2" placeholder="Section" ng-model="appealdata.coursesection2" maxlength="1" size="3"></div>
     </div>
 
     <div class="row">
-      <div class="col-md-2"><input type="text" id="coursecode3" placeholder="Code" maxlength="7" size="7"></div>
-      <div class="col-md-8"><input type="text" id="coursename3" placeholder="Course name" size="45"></div>
-      <div class="col-md-2"><input type="text" id="coursensection3" placeholder="Section" maxlength="1" size="3"></div>
+      <div class="col-md-2"><input type="text" id="coursecode3" placeholder="Code" ng-model="appealdata.coursecode3" maxlength="7" size="7"></div>
+      <div class="col-md-8"><input type="text" id="coursename3" placeholder="Course name" ng-model="appealdata.coursename3" size="45"></div>
+      <div class="col-md-2"><input type="text" id="coursensection3" placeholder="Section" ng-model="appealdata.coursesection3" maxlength="1" size="3"></div>
     </div>
 
     <div class="row">
-      <div class="col-md-2"><input type="text" id="coursecode4" placeholder="Code" maxlength="7" size="7"></div>
-      <div class="col-md-8"><input type="text" id="coursename4" placeholder="Course name" size="45"></div>
-      <div class="col-md-2"><input type="text" id="coursensection4" placeholder="Section" maxlength="1" size="3"></div>
+      <div class="col-md-2"><input type="text" id="coursecode4" placeholder="Code" ng-model="appealdata.coursecode4" maxlength="7" size="7"></div>
+      <div class="col-md-8"><input type="text" id="coursename4" placeholder="Course name" ng-model="appealdata.coursename4" size="45"></div>
+      <div class="col-md-2"><input type="text" id="coursensection4" placeholder="Section" ng-model="appealdata.coursesection4" maxlength="1" size="3"></div>
     </div>
 
     <div class="row">
-      <div class="col-md-2"><input type="text" id="coursecode5" placeholder="Code" maxlength="7" size="7"></div>
-      <div class="col-md-8"><input type="text" id="coursename5" placeholder="Course name" size="45"></div>
-      <div class="col-md-2"><input type="text" id="coursensection5" placeholder="Section" maxlength="1" size="3"></div>
+      <div class="col-md-2"><input type="text" id="coursecode5" placeholder="Code" ng-model="appealdata.coursecode5" maxlength="7" size="7"></div>
+      <div class="col-md-8"><input type="text" id="coursename5" placeholder="Course name" ng-model="appealdata.coursename5" size="45"></div>
+      <div class="col-md-2"><input type="text" id="coursensection5" placeholder="Section" ng-model="appealdata.coursesection5" maxlength="1" size="3"></div>
     </div>
 
     <div class="row">
-      <div class="col-md-2"><input type="text" id="coursecode6" placeholder="Code" maxlength="7" size="7"></div>
-      <div class="col-md-8"><input type="text" id="coursename6" placeholder="Course name" size="45"></div>
-      <div class="col-md-2"><input type="text" id="coursensection6" placeholder="Section" maxlength="1" size="3"></div>
+      <div class="col-md-2"><input type="text" id="coursecode6" placeholder="Code" ng-model="appealdata.coursecode6" maxlength="7" size="7"></div>
+      <div class="col-md-8"><input type="text" id="coursename6" placeholder="Course name" ng-model="appealdata.coursename6" size="45"></div>
+      <div class="col-md-2"><input type="text" id="coursensection6" placeholder="Section" ng-model="appealdata.coursesection6" maxlength="1" size="3"></div>
     </div>
 
     <br>
@@ -65,14 +65,14 @@
     </div>
     <div class="row">
       <div class="col-md-10">
-        <label class="radio-inline"><input type="radio" name="improvegrade">Improving the grade</label>
-        <label class="radio-inline"><input type="radio" name="missingcredit">Missing credits</label>
+        <label class="radio-inline"><input type="radio" ng-model="appealdata.reason" ng-value="improvegrade" name="improvegrade">Improving the grade</label>
+        <label class="radio-inline"><input type="radio" ng-model="appealdata.reason" ng-value="missingcredit" name="missingcredit">Missing credits</label>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-2">
-        <label class="radio-inline"><input type="radio" name="other">Other:</label>
+        <label class="radio-inline"><input type="radio" ng-model="appealdata.reason" ng-value="other" name="other">Other:</label>
       </div>
       <div class="col-md-10">
         <input type="text" id="reason" placeholder="please specify" size="45">

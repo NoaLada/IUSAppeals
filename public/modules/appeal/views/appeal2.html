@@ -21,17 +21,17 @@
     <div class="row">
       <div class="col-md-4"><label>Student Status: </label> </div>
       <div class="col-md-8">
-        <label class="radio-inline"><input type="radio" name="optradio">Enrolled Student</label>
-        <label class="radio-inline"><input type="radio" name="optradio">New Student</label>
+        <label class="radio-inline"><input type="radio" name="optradio" data-ng-model="data.student_type" data-ng-value="enrolled">Enrolled Student</label>
+        <label class="radio-inline"><input type="radio" name="optradio" data-ng-model="data.student_type" data-ng-value="new">New Student</label>
       </div>
     </div>
     <br>
 
     <label for="AppealExplanation"> To who may concern,</label>
-    <textarea class="form-control" rows="7" id="AppealExplanation" ng-model="text" required></textarea>
+    <textarea class="form-control" rows="7" id="AppealExplanation" ng-model="data.text" required></textarea>
 
     <div class="row">
-      <div class="col-md-12"><label for="">Sincerely, <br> <i>I declare that all the information given hereby and in the attachments are accurate to the best of my knowledge. </i></label>
+      <div class="col-md-12"><label for="">Sincerelyy, <br> <i>I declare that all the information given hereby and in the attachments are accurate to the best of my knowledge. </i></label>
       </div>
     </div>
 

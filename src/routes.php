@@ -3,9 +3,26 @@ use src\Models\User;
 use src\Controllers\UserController;
 const ADMIN = 1;
 const STANDARD = 0;
+
+$app->get('/download.pdf', function($request, $response, $args) {
+    $file = 'Thesis.pdf';
+
+    $response = $response   ->withHeader('Content-Type', 'application/pdf')
+                            ->withHeader('Content-Disposition', 'inline; filename="' .basename("$file") . '"')
+                            ->withHeader('Content-Transfer-Encoding', 'binary')
+                            ->withHeader('Expires', '0')
+                            ->withHeader('Cache-Control', 'must-revalidate')
+                            ->withHeader('Pragma', 'public')
+                            ->withHeader('Content-Length', filesize($file));
+
+    readfile($file);
+    return $response;
+});
+
 $app->get('/', function ($request, $response, $args) {
     return $this->renderer->render($response, 'index.phtml', $args);
 });
+
 $app->post('/api/authenticate', function ($request, $response, $args) {
     $json = json_decode($request->getBody(), true);
     $success = false;

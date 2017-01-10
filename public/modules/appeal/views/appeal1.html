@@ -1,6 +1,6 @@
 
 <div ng-include src="'../modules/header.html'" data-ng-init="get_data()"></div>
-
+<a href="/download.pdf">Hey</a>
 <form class="appeal-form" name="form" ng-submit="sendappeal()" role="form" c>
     <div class="special-padding">
     <img src="images/student_appeals1.jpg" style='height: 100%; width: 100%; object-fit: contain'/>
@@ -20,7 +20,7 @@
        <br>
 
          <label for="AppealExplanation"> Request and reasons for appealing for stated issue:</label>
-         <textarea class="form-control" rows="10" id="AppealExplanation" ng-model="data.text" required></textarea>
+         <textarea class="form-control" rows="10" id="AppealExplanation" ng-model="appealdata.text" required></textarea>
          <br>
 
        <div class="row">

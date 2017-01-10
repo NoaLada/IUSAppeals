@@ -1,18 +1,120 @@
 
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">
+        Administrator
+      </a>
+    </div>
 
-<div ng-include src="'../modules/header.html'"></div>
 
-<div class="menu-form" name="form" role="form">
-     <a href="#/appeal1"><img src="images/student_appeals1.jpg" style='height: 100%; width: 100%; object-fit: contain'/></a>
-     <p></p>
-     <a href="#/appeal2"><img src="images/student_appeals2.jpg" style='height: 100%; width: 100%; object-fit: contain'/></a>
-     <p></p>
-     <a href="#/appeal3"><img src="images/student_appeals3.jpg" style='height: 100%; width: 100%; object-fit: contain'/></a>
-     <p></p>
-     <a href="#/appeal4"><img src="images/student_appeals4.jpg" style='height: 100%; width: 100%; object-fit: contain'/></a>
-     <p></p>
-     <a href="#/appeal5"><img src="images/student_appeals5.jpg" style='height: 100%; width: 100%; object-fit: contain'/></a>
-     <p></p>
-     <a href="#/appeal6"><img src="images/student_appeals6.jpg" style='height: 100%; width: 100%; object-fit: contain'/></a>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <form class="navbar-form navbar-left" method="GET" role="search">
+        <div class="form-group">
+          <input type="text" name="q" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown ">
+          <a href="#/login" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-</div>
+
+<div class="container-fluid main-container">
+  <div class="col-md-2 sidebar">
+    <div class="row">
+
+      <div class="absolute-wrapper"> </div>
+      <!-- Menu -->
+      <div class="side-menu">
+        <nav class="navbar navbar-default" role="navigation">
+          <!-- Main Menu -->
+          <div class="side-menu-container">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#"><span class="glyphicon glyphicon-list"></span> Pending appeals</a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-check"></span> Solved appeals</a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-flash"></span> Issues</a></li>
+
+
+
+            </ul>
+          </div>
+        </nav>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-10 content">
+    <div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <span class="glyphicon glyphicon-list"></span>Pending Appeals
+          <div class="pull-right action-buttons">
+            <div class="btn-group pull-right">
+              <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
+              </button>
+              <ul class="dropdown-menu slidedown">
+                <li><a href=""><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-trash"></span>Delete</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-flag"></span>Flag</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group">
+
+
+            <li class="list-group-item">
+              <div class="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <label for="checkbox">
+                  Appeal type - Name Surname
+                </label>
+              </div>
+              <div class="pull-right action-buttons">
+                <a href=""><span class="glyphicon glyphicon-forward"></span></a>
+                <a href="" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
+                <a href="" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
+              </div>
+            </li>
+
+
+
+          </ul>
+        </div>
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col-md-6">
+              <h6>
+                Total Count: 1</h6>
+              </div>
+              <div class="col-md-6">
+                <ul class="pagination pagination-sm pull-right">
+                  <li class="disabled"><a href="javascript:void(0)">«</a></li>
+                  <li class="active"><a href="javascript:void(0)">1 <span class="sr-only">(current)</span></a></li>
+
+                  <li><a href="javascript:void(0)">»</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>

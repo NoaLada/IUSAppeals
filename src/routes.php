@@ -71,6 +71,7 @@ $app->post('/api/authenticate', function ($request, $response, $args) {
     return $response->withJson(array('success' => $success, 'message' => $error, 'user_type' => $user_type,
         'security_key' => $security_key, 'test' => $_SESSION));
 });
+
 $app->get('/api/user/{id}/{key}', function ($request, $response, $args) {
     if (!isset($args['key']) || $_SESSION[$args['key']."u"] != $args['id']) {
         return $response->withJson(array('success' => false, 'message' => "Access denied!", 'test' => $args['key']));
@@ -91,6 +92,7 @@ $app->get('/api/user/{id}/{key}', function ($request, $response, $args) {
     }
     return $response->withJson(array('success' => false, 'message' => $error));
 });
+
 $app->post('/api/appeals', function ($request, $response, $args) {
     $json = json_decode($request->getBody(), true);
     if (!check_key($request, STANDARD)) {
@@ -115,10 +117,12 @@ $app->post('/api/appeals', function ($request, $response, $args) {
     }
     return $response->withJson(array('success' => $success, 'message' => $error));
 });
+
 $app->get('/api/appeals', function ($request, $response, $args) {
     if (!check_key($request, ADMIN)) {
         return $response->withJson(array('success' => false, 'message' => "Access denied!"));
     }
+
     $sql = "SELECT * FROM appeals";
     $db = connect_db();
     $result = $db->query($sql);
@@ -135,6 +139,7 @@ $app->get('/api/appeals', function ($request, $response, $args) {
     }
     return $response->withJson(array('success' => false, 'message' => $error));
 });
+
 $app->delete('/api/appeals', function ($request, $response, $args) {
     if (!check_key($request, ADMIN)) {
         return $response->withJson(array('success' => false, 'message' => "Access denied!"));
@@ -157,6 +162,7 @@ $app->delete('/api/appeals', function ($request, $response, $args) {
     }
     return $response->withJson(array('success' => $success, 'message' => $error));
 });
+
 $app->get('/api/appeals/user/{id}', function ($request, $response, $args) {
     if ($request->hasHeader('key') &&
         $_SESSION[$request->getHeader('key')[0]."u"] == $args['id']) {
@@ -168,6 +174,7 @@ $app->get('/api/appeals/user/{id}', function ($request, $response, $args) {
     }
     return $response->withJson(array('success' => false, 'message' => "Access denied!"));
 });
+
 $app->get('/api/appeals/appeal/{id}', function ($request, $response, $args) {
     if ($request->hasHeader('key') &&
         $_SESSION[$request->getHeader('key')[0]."u"] == $args['id']) {
@@ -178,9 +185,78 @@ $app->get('/api/appeals/appeal/{id}', function ($request, $response, $args) {
     }
     return $response->withJson(array('success' => false, 'message' => "Access denied!"));
 });
+
+$app->get('/api/appeals/pdf/{id}', function ($request, $response, $args) {
+    /*if (!($request->hasHeader('key') &&
+        $_SESSION[$request->getHeader('key')[0]."u"] == $args['id']) && !check_key($request, ADMIN)) {
+        return $response->withJson(array('success' => false, 'message' => "Access denied!"));
+    }*/
+
+    if (!isset($args['id'])) {
+        return $response->withJson(array('success' => false, 'message' => "Missing information!")); 
+    }
+
+    $sql = "SELECT * FROM appeals WHERE appeal_id = '".$args['id']."'";
+    $db = connect_db();
+    $result = $db->query($sql);
+    if ($result === false) {
+        $error = "Could not get appeal from database.";
+    } else if ($result->num_rows === 0) {
+        $error = "No appeals found.";
+    } else {
+        $data = array();
+        while($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+
+        $appeal = $data[0];
+        $adata = json_decode($appeal['text'], true);
+        $pdf = new FPDI();      
+        if ($appeal['type'] > 0 && $appeal['type'] < 6) {
+            $pdf->setSourceFile("appeals/appeal".$appeal['type'].".pdf");
+        }
+
+        $page = $pdf->importPage(1, '/MediaBox');
+        $pdf->addPage();
+        $pdf->useTemplate($page, 0, 0, 0, 0, true); 
+        $pdf->SetFont('Arial');
+        $pdf->SetTextColor(0, 0, 0);
+
+        insert_data($pdf, $adata, $appeal['type']);
+
+        ob_end_clean();
+        $pdf->Output();
+    }
+    
+});
+
+function insert_data($pdf, $adata, $type) {
+    if ($type == 1) {
+        $pdf->SetXY(68, 81);
+        $pdf->Write(0, $adata['firstname'].' '.$adata['lastname']);
+        $pdf->SetXY(25, 112);
+        $pdf->MultiCell(160, 124, $adata['text'], 'T', 'L', false);
+        $pdf->SetXY(68, 95);
+        $pdf->Write(0, $adata['department']."/".$adata['faculty']);
+        $pdf->SetXY(163, 95);
+        $pdf->Write(0, $adata['CGPA']);
+        $pdf->SetXY(146, 258);
+        $pdf->Write(0, $adata['telephone']);
+    } else if (type == 2) {
+        // TODO
+    } else if (type == 3) {
+        // TODO
+    } else if (type == 4) {
+        // TODO
+    } else if (type == 5) {
+        // TODO
+    }    
+}
+
 $app->get('/login', function ($request, $response, $args) {
     return $this->renderer->render($response, 'login.phtml', $args);
 });
+
 $app->get('/api/conf', function ($request, $response, $args) {
     if ($request->hasHeader('key') && $request->hasHeader('id')) {
         $success = false;
@@ -225,6 +301,7 @@ $app->get('/api/conf', function ($request, $response, $args) {
 
     return $response->withJson(array('success' => false, 'message' => "Missing information!"));
 });
+
 function check_key($request, $type) {
     $json = json_decode($request->getBody(), true);
 
@@ -247,6 +324,7 @@ function check_key($request, $type) {
     }
     return false;
 }
+
 function connect_db() {
     $server = 'localhost:3306';
     $user = 'root';
@@ -255,19 +333,25 @@ function connect_db() {
     $connection = new mysqli($server, $user, $pass, $database);
     return $connection;
 }
+
 function generate_confirmation_link($signature_id, $user_id, $appeal_id, $sperson_id, $user_salt) {
     $hash = generate_confirmation_hash($signature_id, $user_id, $appeal_id, $sperson_id, $user_salt);
+   
     return "http://localhost/api/conf/?id=".$signature_id."&key=".$hash;
 }
+
 function generate_confirmation_hash($signature_id, $user_id, $appeal_id, $sperson_id, $user_salt) {
     return hash("sha256", $signature_id.":)".$user_id."<3".$appeal_id.":)".$sperson_id."<3".$user_salt);
 }
+
 function generateSalt() {
     return substr(uniqid(mt_rand(), true), 0, 12);
 }
+
 function generateHash($password, $salt) {
     return hash("sha256", $password.$salt);
 }
+
 function getAppealsInJSON($user_id, $appeal_id, $response) {
     $error = "";
     $data = "";
@@ -294,4 +378,17 @@ function getAppealsInJSON($user_id, $appeal_id, $response) {
         $error = "Missing information";
     }
     return $response->withJson(array('success' => false, 'message' => $error));
+}
+
+function injectPDF($file, $response) {
+    $response = $response   ->withHeader('Content-Type', 'application/pdf')
+                            ->withHeader('Content-Disposition', 'inline; filename="' .basename("$file") . '"')
+                            ->withHeader('Content-Transfer-Encoding', 'binary')
+                            ->withHeader('Expires', '0')
+                            ->withHeader('Cache-Control', 'must-revalidate')
+                            ->withHeader('Pragma', 'public')
+                            ->withHeader('Content-Length', filesize($file));
+
+    readfile($file);
+    return $response;
 }

@@ -5,6 +5,8 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use \Slim\App;
 
 require '../vendor/autoload.php';
+require_once('fpdf.php');
+require_once('fpdi.php');
 
 function connect_db() {
 	$server = 'localhost';

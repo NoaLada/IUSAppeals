@@ -24,7 +24,7 @@ angular.module('IUSAppeals', [
             hideMenus: true
         })
 
-        .when('/appeal_list', {
+        .when('/list', {
             controller: 'AppealController',
             templateUrl: 'modules/appeal/views/appeal_list.html'
         })

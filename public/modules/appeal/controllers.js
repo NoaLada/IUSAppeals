@@ -44,11 +44,24 @@ angular.module('Appeal')
           });
       };
 
+      $scope.displayappeal = function () {
+        console.log("Entered Controller!!");
+          $scope.dataLoading = true;
+
+          console.log(json);
+          DisplayAppealService.DisplayAppeal(AuthenticationService.GetLoggedUser(), json, function(response) {
+              if(response.success) {
+                  console.log("response success");
+              } else {
+                  console.log("Response not success");
+                  $scope.error = response.message;
+                  $scope.dataLoading = false;
+              }
+          });
+      };
+
       $scope.data = null;
 
       $scope.date = new Date();
 
     }]);
-
-
-    //azrichak15M

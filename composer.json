@@ -18,7 +18,8 @@
         "monolog/monolog": "^1.17",
         "setasign/fpdi": "*",
         "setasign/fpdf": "*",
-        "illuminate/database": "*"
+        "illuminate/database": "*",
+        "phpmailer/phpmailer": "*"
     },
     "require-dev": {
         "phpunit/phpunit": ">=4.8 < 6.0"

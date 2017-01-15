@@ -93,6 +93,39 @@ $app->get('/api/user/{id}/{key}', function ($request, $response, $args) {
     return $response->withJson(array('success' => false, 'message' => $error));
 });
 
+$app->post('/api/sendmail/appeal', function ($request, $response, $args) {
+    if (!check_key($request, ADMIN)) {
+        return $response->withJson(array('success' => false, 'message' => "Access denied!", 'test' => $json['key']));
+    }
+
+    $json = json_decode($request->getBody(), true);
+
+    $message = '';
+    $success = true;
+    if (isset($json['appeal_id'])) {
+        $sql = "SELECT * FROM user,signatures,signpeople WHERE user.id = signatures.user_id AND signpeople.id = signatures.sign_person_id AND signatures.appeal_id = ".$json['appeal_id'].");";
+        $db = connect_db();
+        $result = $db->query($sql);
+
+        $data = array();
+        while($row = mysqli_fetch_assoc($result)) {
+            $mail = $row['mail'];
+            $subject = "A new IUS appeal";
+            $content = get_mail_content($row);
+
+            if (!send_mail($mail, $subject, $content)) {
+                $success = false;
+                $message = 'Cannot send mail.';
+            }
+        }
+    } else {
+        $message = "Missing appeal_id info";
+        $success = false;
+    }
+
+    return $response->withJson(array('success' => $success, 'message' => $message));
+});
+
 $app->post('/api/appeals', function ($request, $response, $args) {
     $json = json_decode($request->getBody(), true);
     if (!check_key($request, STANDARD)) {
@@ -302,6 +335,31 @@ $app->get('/api/conf', function ($request, $response, $args) {
     return $response->withJson(array('success' => false, 'message' => "Missing information!"));
 });
 
+function send_mail($mail, $subject, $content) {
+    $mailer = new PHPMailer;
+
+    $mailer->IsSMTP();
+    //$mailer->SMTPDebug = 1;
+    $mailer->SMTPSecure = "ssl";
+    $mailer->Port = 465;
+    $mailer->Host = "smtp.gmail.com";
+    $mailer->SMTPAuth = true;
+    $mailer->IsHTML(true);
+    $mailer->Username = "iusappeals@gmail.com";
+    $mailer->Password = "lifeisbeautiful";    
+    $mailer->From = "iusappeals@gmail.com";
+    $mailer->addAddress($mail);
+    $mailer->isHTML(true);
+    $mailer->Subject = $subject;
+    $mailer->Body = $content;
+
+    if ($mailer->send()) {
+        return array('success' => true);
+    } else {
+        return array('success' => false, 'message' => 'did not send');
+    }
+}
+
 function check_key($request, $type) {
     $json = json_decode($request->getBody(), true);
 
@@ -333,6 +391,24 @@ function connect_db() {
     $connection = new mysqli($server, $user, $pass, $database);
     return $connection;
 }
+
+function get_mail_content($data) {
+    $signature_id = $data['signature_id'];
+    $user_id = $data['user_id'];
+    $appeal_id = $data['appeal_id'];
+    $sperson_id = $data['sign_person_id'];
+    $user_salt = $data['salt'];
+
+    $content = "<p>Dear ".$data['name'].",</p>".
+                "<p>A new IUS appeal has been sent to you for verification.".
+                "In order to view the appeal visit the following link:</p>".
+                "<p>http://localhost/api/appeals/pdf/".$appeal_id."</p>".
+                "<p>In order to verify the given appeal, visit the following link:</p>".
+                "<p>".$generate_confirmation_link($signature_id, $user_id, $appeal_id, $sperson_id, $user_salt)."</p>".
+                "<p>Kind regards,<br>IUSAppealSystem</p>";
+    return $content;
+}
+
 
 function generate_confirmation_link($signature_id, $user_id, $appeal_id, $sperson_id, $user_salt) {
     $hash = generate_confirmation_hash($signature_id, $user_id, $appeal_id, $sperson_id, $user_salt);
